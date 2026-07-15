@@ -85,3 +85,24 @@ ggplot(data_bersih, aes(x = reorder(provinsi, rasio_jk), y = rasio_jk)) +
   ) +
   theme_minimal()
 ```
+
+## 4. Menampilkan 10 Provinsi dengan Penduduk Terbanyak
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+
+# Mengambil 10 provinsi teratas
+top_10_provinsi <- data_bersih %>% slice_max(total, n = 10)
+
+ggplot(top_10_provinsi, aes(x = reorder(provinsi, total), y = total / 1000000)) +
+  geom_col(fill = "#005088") +
+  coord_flip() + # Memutar grafik agar nama provinsi mudah dibaca
+  labs(
+    title = "10 Provinsi dengan Penduduk Terbanyak (2023)",
+    x = "Provinsi",
+    y = "Jumlah Penduduk (Juta Jiwa)",
+    caption = "Sumber data: Dataset Jumlah Penduduk 2023"
+  ) +
+  theme_minimal()
+```
