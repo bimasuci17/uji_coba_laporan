@@ -1,0 +1,87 @@
+---
+title: "Uji Coba Automasi Laporan Quarto dengan RStudio"
+author: "Bimasuci Basiludin"
+date: today
+format:
+  html: default
+  pdf: default
+  docx: default
+  pptx: default
+  
+execute:
+  echo: false
+  warning: false
+---
+
+## 1. Menampilkan 5 data teratas
+
+Pertama, kita akan mencoba untuk menampilkan sampel 5 data teratas dari sumber data yang digunakan.
+
+```{r}
+#| include: false
+
+install.packages("readxl")
+install.packages("tidyverse")
+library(readxl)
+library(tidyverse)
+
+#Membaca data (sesuaikan nama file jika berbeda di laptop Anda)
+
+nama_file <- "Jumlah penduduk Menurut Jenis Kelamin dan Rasio Jenis Kelamin-2023-Provinsi.xlsx"
+data_penduduk <- read_excel(nama_file)
+```
+
+```{r}
+#Menampilkan 5 data teratas
+
+knitr::kable(
+  head(data_penduduk),
+  caption = "Tabel 1. Lima Data Pertama Dataset Kependudukan Indonesia 2023"
+)
+```
+
+## 2. Merapihkan nama kolom dan memfilter data
+
+```{r}
+
+# Merapikan nama kolom dan memfilter data
+data_bersih <- data_penduduk %>%
+  rename(
+    no = No,
+    provinsi = Cakupan,
+    satuan = Satuan,
+    laki_laki = `LAKI LAKI`,
+    perempuan = PEREMPUAN,
+    total = TOTAL,
+    rasio_jk = `RASIO JENIS KELAMIN`
+  ) %>%
+  # Menghapus baris jika ada total nasional/Indonesia (biasanya di baris akhir)
+  filter(!str_detect(provinsi, "(INDONESIA|TOTAL|Total|Indonesia)")) %>%
+  # Mengurutkan berdasarkan total penduduk terbanyak
+  arrange(desc(total))
+
+# Menampilkan data yang sudah rapi
+data_bersih %>%
+  select(-no) %>%               # <--- Baris ini yang ditambahkan
+  knitr::kable(caption = "Tabel 2. Data Bersih Kependudukan Indonesia 2023")
+```
+
+## 3. Menampilkan Grafik Rasio Jenis Kelamin per Provinsi
+
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+
+ggplot(data_bersih, aes(x = reorder(provinsi, rasio_jk), y = rasio_jk)) +
+  geom_point(color = "#e056fd", size = 3) +
+  geom_segment(aes(x = provinsi, xend = provinsi, y = 100, yend = rasio_jk), color = "grey") +
+  geom_hline(yintercept = 100, linetype = "dashed", color = "red") + # Garis seimbang (100)
+  coord_flip() +
+  labs(
+    title = "Rasio Jenis Kelamin per Provinsi (2023)",
+    subtitle = "Garis merah putus-putus menunjukkan rasio seimbang (100)",
+    x = "Provinsi",
+    y = "Rasio Jenis Kelamin (Laki-laki per 100 Perempuan)"
+  ) +
+  theme_minimal()
+```
