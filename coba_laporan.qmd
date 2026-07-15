@@ -3,11 +3,27 @@ title: "Uji Coba Automasi Laporan Quarto dengan RStudio"
 author: "Bimasuci Basiludin"
 date: today
 format:
-  html: default
-  pdf: default
-  docx: default
-  pptx: default
-  
+  html:
+    toc: true
+    toc-title: "Daftar Isi"
+    toc-depth: 2
+    title-block-banner: "#004488"
+    title-block-style: "default"  # bisa juga "minimal"
+  pdf:
+    toc: true
+    toc-title: "Daftar Isi"
+    titlepage: true
+    titlepage-logo: "logo.png"   # opsional, letakkan file di folder yang sama
+    titlepage-color: "004488"    # warna latar belakang (opsional)
+    titlepage-text-color: "FFFFFF"
+    titlepage-rule-color: "FFD700"
+    titlepage-rule-height: 2
+  docx:
+    toc: true
+  pptx:
+    default
+    # PPTX tidak mendukung TOC otomatis, tetapi bisa dibuat manual
+
 execute:
   echo: false
   warning: false
@@ -20,8 +36,6 @@ Pertama, kita akan mencoba untuk menampilkan sampel 5 data teratas dari sumber d
 ```{r}
 #| include: false
 
-install.packages("readxl")
-install.packages("tidyverse")
 library(readxl)
 library(tidyverse)
 
