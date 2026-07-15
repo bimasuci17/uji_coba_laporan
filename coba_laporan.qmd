@@ -3,31 +3,23 @@ title: "Uji Coba Automasi Laporan Quarto dengan RStudio"
 author: "Bimasuci Basiludin"
 date: today
 format:
-  html:
-    toc: true
-    toc-title: "Daftar Isi"
-    toc-depth: 2
-    title-block-banner: "#004488"
-    title-block-style: "default"  # bisa juga "minimal"
   pdf:
-    toc: true
-    toc-title: "Daftar Isi"
-    titlepage: true
-    titlepage-logo: "logo.png"   # opsional, letakkan file di folder yang sama
-    titlepage-color: "004488"    # warna latar belakang (opsional)
-    titlepage-text-color: "FFFFFF"
-    titlepage-rule-color: "FFD700"
+    documentclass: article
+    classoption: [titlepage]           # <--- MEMAKSA JUDUL MENJADI HALAMAN COVER TERPISAH
+    toc: true                           # Menampilkan Daftar Isi
+    toc-title: "Daftar Isi"             # Judul Daftar Isi
+    titlepage: true                     # Membuat halaman cover terpisah
+    titlepage-logo: "logo.png"          # Opsional (pastikan file ada di folder yang sama)
+    titlepage-color: "004488"           # Warna latar belakang cover
+    titlepage-text-color: "FFFFFF"      # Warna teks cover
+    titlepage-rule-color: "FFD700"      # Warna garis dekorasi cover
     titlepage-rule-height: 2
-  docx:
-    toc: true
-  pptx:
-    default
-    # PPTX tidak mendukung TOC otomatis, tetapi bisa dibuat manual
-
 execute:
   echo: false
   warning: false
 ---
+
+\clearpage
 
 ## 1. Menampilkan 5 data teratas
 
@@ -38,27 +30,41 @@ Pertama, kita akan mencoba untuk menampilkan sampel 5 data teratas dari sumber d
 
 library(readxl)
 library(tidyverse)
+library(flextable)
 
-#Membaca data (sesuaikan nama file jika berbeda di laptop Anda)
+#Membaca data (sesuaikan nama file yang tersimpan di lokal)
 
 nama_file <- "Jumlah penduduk Menurut Jenis Kelamin dan Rasio Jenis Kelamin-2023-Provinsi.xlsx"
 data_penduduk <- read_excel(nama_file)
 ```
 
 ```{r}
-#Menampilkan 5 data teratas
-
-knitr::kable(
-  head(data_penduduk),
-  caption = "Tabel 1. Lima Data Pertama Dataset Kependudukan Indonesia 2023"
-)
+# Menampilkan 5 data teratas dengan header pendek dan padding ketat
+head(data_penduduk) %>% 
+  rename(
+    `No` = No,
+    `Provinsi` = Cakupan,
+    `Satuan` = Satuan,
+    `Laki-laki` = `LAKI LAKI`,
+    `Perempuan` = PEREMPUAN,
+    `Total` = TOTAL,
+    `Rasio\nJK` = `RASIO JENIS KELAMIN`      # <--- Menggunakan \n agar judul kolom menekuk ke bawah
+  ) %>% 
+  flextable() %>% 
+  set_caption("Tabel 1. Lima Data Pertama Dataset Kependudukan Indonesia 2023") %>% 
+  fontsize(size = 8, part = "all") %>%       # Ukuran huruf diperkecil ke 8
+  padding(padding = 2, part = "all") %>%     # Mempersempit jarak antar baris & kolom
+  width(j = 1, width = 0.4) %>% 
+  width(j = 2, width = 1.4) %>% 
+  width(j = 3, width = 0.5) %>% 
+  width(j = 4:7, width = 0.75) %>% 
+  set_table_properties(layout = "fixed")
 ```
 
-## 2. Merapihkan nama kolom dan memfilter data
+## 2. Merapihkan nama kolom dan mengurutkan berdasarkan total penduduk
 
 ```{r}
-
-# Merapikan nama kolom dan memfilter data
+# Merapikan nama kolom dan mengurutkan berdasarkan total penduduk
 data_bersih <- data_penduduk %>%
   rename(
     no = No,
@@ -69,15 +75,30 @@ data_bersih <- data_penduduk %>%
     total = TOTAL,
     rasio_jk = `RASIO JENIS KELAMIN`
   ) %>%
-  # Menghapus baris jika ada total nasional/Indonesia (biasanya di baris akhir)
+  # Menghapus baris jika ada total nasional/Indonesia
   filter(!str_detect(provinsi, "(INDONESIA|TOTAL|Total|Indonesia)")) %>%
   # Mengurutkan berdasarkan total penduduk terbanyak
   arrange(desc(total))
 
-# Menampilkan data yang sudah rapi
+# Menampilkan data bersih dengan alokasi lebar yang super aman
 data_bersih %>%
-  select(-no) %>%               # <--- Baris ini yang ditambahkan
-  knitr::kable(caption = "Tabel 2. Data Bersih Kependudukan Indonesia 2023")
+  select(-no) %>%              
+  rename(
+    `Provinsi` = provinsi,
+    `Satuan` = satuan,
+    `Laki-laki` = laki_laki,
+    `Perempuan` = perempuan,
+    `Total` = total,
+    `Rasio\nJK` = rasio_jk                # <--- Judul kolom dibuat pendek & menekuk
+  ) %>% 
+  flextable() %>% 
+  set_caption("Tabel 2. Data Bersih Kependudukan Indonesia 2023") %>% 
+  fontsize(size = 8, part = "all") %>%       # Ukuran huruf diperkecil ke 8
+  padding(padding = 2, part = "all") %>%     # Mempersempit ruang kosong di sel
+  width(j = 1, width = 1.6) %>%              # Kolom provinsi diberi ruang lebih besar untuk wrap text
+  width(j = 2, width = 0.5) %>% 
+  width(j = 3:6, width = 0.8) %>% 
+  set_table_properties(layout = "fixed")     # Mengunci agar text wrap aktif sempurna
 ```
 
 ## 3. Menampilkan Grafik Rasio Jenis Kelamin per Provinsi

@@ -45,6 +45,20 @@ ul.task-list li input[type="checkbox"] {
         background: #004488;
       }
 </style>
+<style>
+  body {
+    column-count: 2;
+    column-gap: 2em;
+  }
+  /* Agar judul dan daftar isi tetap satu kolom penuh */
+  .quarto-title-block, #TOC, h1, h2, h3 {
+    column-span: all;
+  }
+  /* Agar tabel dan grafik tidak pecah antar kolom */
+  table, figure, .cell {
+    break-inside: avoid;
+  }
+</style>
 
 
 </head>
@@ -525,7 +539,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="coba_laporan_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="768"></p>
+<p><img src="coba_laporan_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -537,7 +551,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="coba_laporan_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="768"></p>
+<p><img src="coba_laporan_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
