@@ -2,18 +2,46 @@
 title: "Uji Coba Automasi Laporan Quarto dengan RStudio"
 author: "Bimasuci Basiludin"
 date: today
+lang: id
 format:
   pdf:
     documentclass: article
-    classoption: [titlepage]           # <--- MEMAKSA JUDUL MENJADI HALAMAN COVER TERPISAH
-    toc: true                           # Menampilkan Daftar Isi
-    toc-title: "Daftar Isi"             # Judul Daftar Isi
-    titlepage: true                     # Membuat halaman cover terpisah
-    titlepage-logo: "logo.png"          # Opsional (pastikan file ada di folder yang sama)
-    titlepage-color: "004488"           # Warna latar belakang cover
-    titlepage-text-color: "FFFFFF"      # Warna teks cover
-    titlepage-rule-color: "FFD700"      # Warna garis dekorasi cover
-    titlepage-rule-height: 2
+    toc: true
+    # Mengosongkan perintah pembentukan judul bawaan LaTeX agar halaman cover polos tidak terbuat
+    include-in-header:
+      text: |
+        \let\maketitle\relax 
+    # Memasukkan kode cover kustom berwarna biru
+    include-before-body:
+      text: |
+        \begin{titlepage}
+          \definecolor{coverblue}{HTML}{004488}
+          \definecolor{goldline}{HTML}{FFD700}
+          \pagecolor{coverblue} % Mewarnai latar belakang cover menjadi biru
+          \thispagestyle{empty} % Menghilangkan nomor halaman pada cover
+          
+          \centering
+          \vspace*{0cm}
+          
+          % Memasukkan Logo (Pastikan file logo-nobg.png ada di folder yang sama)
+          \includegraphics[width=4.5cm]{logo-nobg.png}\par\vspace{3cm}
+          
+          % Judul Laporan
+          {\huge\bfseries\color{white} Uji Coba Automasi Laporan Quarto dengan RStudio \par}
+          \vspace{0.5cm}
+          
+          % Garis Dekorasi Emas
+          {\color{goldline}\hrule height 2pt}\par
+          \vspace{1.5cm}
+          
+          % Nama Penulis
+          {\Large\bfseries\color{white} Bimasuci Basiludin \par}
+          
+          \vfill
+          % Tanggal di bagian bawah
+          {\large\color{white} \today \par}
+        \end{titlepage}
+        \nopagecolor % Mengembalikan warna halaman berikutnya menjadi putih standar
 execute:
   echo: false
   warning: false
@@ -32,6 +60,9 @@ library(readxl)
 library(tidyverse)
 library(flextable)
 
+# 1. KUNCI UTAMA: Wajib dipasang agar flextable tidak memakai longtable yang merusak mode 2 kolom
+set_flextable_defaults(latex_container = "tabular")
+
 #Membaca data (sesuaikan nama file yang tersimpan di lokal)
 
 nama_file <- "Jumlah penduduk Menurut Jenis Kelamin dan Rasio Jenis Kelamin-2023-Provinsi.xlsx"
@@ -39,7 +70,9 @@ data_penduduk <- read_excel(nama_file)
 ```
 
 ```{r}
-# Menampilkan 5 data teratas dengan header pendek dan padding ketat
+#| tbl-cap: "Lima Data Pertama Dataset Kependudukan Indonesia 2023"
+# Menampilkan 5 data teratas dengan tampilan profesional
+
 head(data_penduduk) %>% 
   rename(
     `No` = No,
@@ -48,22 +81,25 @@ head(data_penduduk) %>%
     `Laki-laki` = `LAKI LAKI`,
     `Perempuan` = PEREMPUAN,
     `Total` = TOTAL,
-    `Rasio\nJK` = `RASIO JENIS KELAMIN`      # <--- Menggunakan \n agar judul kolom menekuk ke bawah
+    `Rasio\nJK` = `RASIO JENIS KELAMIN`
   ) %>% 
   flextable() %>% 
-  set_caption("Tabel 1. Lima Data Pertama Dataset Kependudukan Indonesia 2023") %>% 
-  fontsize(size = 8, part = "all") %>%       # Ukuran huruf diperkecil ke 8
-  padding(padding = 2, part = "all") %>%     # Mempersempit jarak antar baris & kolom
-  width(j = 1, width = 0.4) %>% 
-  width(j = 2, width = 1.4) %>% 
-  width(j = 3, width = 0.5) %>% 
-  width(j = 4:7, width = 0.75) %>% 
-  set_table_properties(layout = "fixed")
+  # HAPUS fungsi set_caption() di sini
+  bold(part = "header") %>%                    
+  align(j = 1:7, align = "center", part = "all") %>% 
+  fontsize(size = 9, part = "all") %>% 
+  padding(padding = 5, part = "header") %>%    
+  padding(padding = 4, part = "body") %>%      
+  autofit() %>% 
+  set_table_properties(layout = "autofit", width = 1)
 ```
 
 ## 2. Merapihkan nama kolom dan mengurutkan berdasarkan total penduduk
 
+Kemudian kita rapihkan nama kolom dan menampilkannya kembali secara utuh dengan mengurutkannya berdasarkan total penduduk.
+
 ```{r}
+#| tbl-cap: "Data Bersih Kependudukan Indonesia 2023"
 # Merapikan nama kolom dan mengurutkan berdasarkan total penduduk
 data_bersih <- data_penduduk %>%
   rename(
@@ -80,7 +116,8 @@ data_bersih <- data_penduduk %>%
   # Mengurutkan berdasarkan total penduduk terbanyak
   arrange(desc(total))
 
-# Menampilkan data bersih dengan alokasi lebar yang super aman
+# Menampilkan data bersih dengan tampilan profesional
+
 data_bersih %>%
   select(-no) %>%              
   rename(
@@ -89,55 +126,78 @@ data_bersih %>%
     `Laki-laki` = laki_laki,
     `Perempuan` = perempuan,
     `Total` = total,
-    `Rasio\nJK` = rasio_jk                # <--- Judul kolom dibuat pendek & menekuk
+    `Rasio\nJK` = rasio_jk
   ) %>% 
   flextable() %>% 
-  set_caption("Tabel 2. Data Bersih Kependudukan Indonesia 2023") %>% 
-  fontsize(size = 8, part = "all") %>%       # Ukuran huruf diperkecil ke 8
-  padding(padding = 2, part = "all") %>%     # Mempersempit ruang kosong di sel
-  width(j = 1, width = 1.6) %>%              # Kolom provinsi diberi ruang lebih besar untuk wrap text
-  width(j = 2, width = 0.5) %>% 
-  width(j = 3:6, width = 0.8) %>% 
-  set_table_properties(layout = "fixed")     # Mengunci agar text wrap aktif sempurna
+  # HAPUS fungsi set_caption() di sini
+  bold(part = "header") %>%                    
+  align(j = 1:6, align = "center", part = "all") %>%   
+  fontsize(size = 9, part = "all") %>% 
+  padding(padding = 5, part = "header") %>%    
+  padding(padding = 3, part = "body") %>% 
+  autofit() %>% 
+  set_table_properties(layout = "autofit", width = 1)
 ```
 
 ## 3. Menampilkan Grafik Rasio Jenis Kelamin per Provinsi
 
+Selanjutnya kita tampilkan grafik rasio jenis kelamin dari setiap provinsi.
+
 ```{r}
-#| fig-width: 8
+#| fig-width: 6.5
 #| fig-height: 6
+#| fig-align: center
+#| fig-cap: "Distribusi Rasio Jenis Kelamin per Provinsi Tahun 2023"
 
 ggplot(data_bersih, aes(x = reorder(provinsi, rasio_jk), y = rasio_jk)) +
-  geom_point(color = "#e056fd", size = 3) +
-  geom_segment(aes(x = provinsi, xend = provinsi, y = 100, yend = rasio_jk), color = "grey") +
-  geom_hline(yintercept = 100, linetype = "dashed", color = "red") + # Garis seimbang (100)
+  geom_segment(aes(x = provinsi, xend = provinsi, y = 100, yend = rasio_jk), color = "grey70", size = 0.6) +
+  geom_point(color = "#e056fd", size = 2) +
+  geom_hline(yintercept = 100, linetype = "dashed", color = "red", size = 0.5) + 
   coord_flip() +
   labs(
-    title = "Rasio Jenis Kelamin per Provinsi (2023)",
-    subtitle = "Garis merah putus-putus menunjukkan rasio seimbang (100)",
+    title = "Rasio Jenis Kelamin per Provinsi",
+    subtitle = "Garis merah putus-putus menunjukkan titik seimbang (100)",
     x = "Provinsi",
-    y = "Rasio Jenis Kelamin (Laki-laki per 100 Perempuan)"
+    y = "Rasio (Laki-laki per 100 Perempuan)"
   ) +
-  theme_minimal()
+  theme_minimal(base_size = 9) +
+  theme(
+    plot.title = element_text(face = "bold", color = "#111111"),
+    plot.subtitle = element_text(color = "grey40", size = 8),
+    # MENAMBAHKAN BORDER PADA GRAFIK
+    panel.border = element_rect(color = "grey80", fill = NA, size = 0.5),
+    panel.grid.major.y = element_blank(), # Menghapus grid horizontal agar lollipop chart bersih
+    plot.margin = margin(10, 15, 10, 10)
+  )
 ```
 
 ## 4. Menampilkan 10 Provinsi dengan Penduduk Terbanyak
 
+Lalu kita tampilkan barchart untuk membandingkan jumlah penduduk dari 10 provinsi dengan jumlah penduduk terbanyak di Indonesia.
+
 ```{r}
-#| fig-width: 8
-#| fig-height: 5
+#| fig-width: 6.5
+#| fig-height: 4
+#| fig-align: center
+#| fig-cap: "Sepuluh Provinsi dengan Jumlah Penduduk Tertinggi"
 
 # Mengambil 10 provinsi teratas
 top_10_provinsi <- data_bersih %>% slice_max(total, n = 10)
 
 ggplot(top_10_provinsi, aes(x = reorder(provinsi, total), y = total / 1000000)) +
-  geom_col(fill = "#005088") +
-  coord_flip() + # Memutar grafik agar nama provinsi mudah dibaca
+  geom_col(fill = "#004488", width = 0.7) + # Menggunakan warna senada dengan tema cover PDF Anda
+  coord_flip() + 
   labs(
-    title = "10 Provinsi dengan Penduduk Terbanyak (2023)",
+    title = "10 Provinsi dengan Jumlah Penduduk Tertinggi di Indonesia",
     x = "Provinsi",
-    y = "Jumlah Penduduk (Juta Jiwa)",
-    caption = "Sumber data: Dataset Jumlah Penduduk 2023"
+    y = "Jumlah Penduduk (Juta Jiwa)"
   ) +
-  theme_minimal()
+  theme_minimal(base_size = 9) +
+  theme(
+    plot.title = element_text(face = "bold", color = "#111111"),
+    # MENAMBAHKAN BORDER PADA GRAFIK
+    panel.border = element_rect(color = "grey80", fill = NA, size = 0.5),
+    panel.grid.major.y = element_blank(), # Menghapus grid vertikal yang tidak perlu
+    plot.margin = margin(10, 15, 10, 10)
+  )
 ```
