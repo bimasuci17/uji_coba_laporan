@@ -1,0 +1,629 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  indonesian,
+]{article}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+\ifLuaTeX
+\usepackage[bidi=basic,shorthands=off,provide=*]{babel}
+\else
+\usepackage[bidi=default,shorthands=off,provide=*]{babel}
+\fi
+\ifLuaTeX
+  \usepackage{selnolig} % disable illegal ligatures
+\fi
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\usepackage{fontspec}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{colortbl}
+\usepackage[normalem]{ulem}
+\usepackage{hhline}
+\newlength\Oldarrayrulewidth
+\newlength\Oldtabcolsep
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{wrapfig}
+\let\maketitle\relax
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Daftar Isi}
+\else
+  \newcommand\contentsname{Daftar Isi}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{Daftar Gambar}
+\else
+  \newcommand\listfigurename{Daftar Gambar}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{Daftar Tabel}
+\else
+  \newcommand\listtablename{Daftar Tabel}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Gambar}
+\else
+  \newcommand\figurename{Gambar}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Tabel}
+\else
+  \newcommand\tablename{Tabel}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Daftar}
+\newcommand*\listoflistings{\listof{codelisting}{Daftar Daftar}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Uji Coba Automasi Laporan Quarto dengan RStudio},
+  pdfauthor={Bimasuci Basiludin},
+  pdflang={id},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Uji Coba Automasi Laporan Quarto dengan RStudio}
+\author{Bimasuci Basiludin}
+\date{2026-07-22}
+\begin{document}
+\maketitle
+
+\begin{titlepage}
+  \definecolor{coverblue}{HTML}{004488}
+  \definecolor{goldline}{HTML}{FFD700}
+  \pagecolor{coverblue} % Mewarnai latar belakang cover menjadi biru
+  \thispagestyle{empty} % Menghilangkan nomor halaman pada cover
+
+  \centering
+  \vspace*{0cm}
+
+  % Memasukkan Logo (Pastikan file logo-nobg.png ada di folder yang sama)
+  \includegraphics[width=4.5cm]{logo-nobg.png}\par\vspace{3cm}
+
+  % Judul Laporan
+  {\huge\bfseries\color{white} Uji Coba Automasi Laporan Quarto dengan RStudio \par}
+  \vspace{0.5cm}
+
+  % Garis Dekorasi Emas
+  {\color{goldline}\hrule height 2pt}\par
+  \vspace{1.5cm}
+
+  % Nama Penulis
+  {\Large\bfseries\color{white} Bimasuci Basiludin \par}
+
+  \vfill
+  % Tanggal di bagian bawah
+  {\large\color{white} \today \par}
+\end{titlepage}
+\nopagecolor % Mengembalikan warna halaman berikutnya menjadi putih standar
+
+\renewcommand*\contentsname{Daftar Isi}
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+
+\clearpage
+
+\subsection{1. Menampilkan 5 data
+teratas}\label{menampilkan-5-data-teratas}
+
+Pertama, kita akan mencoba untuk menampilkan sampel 5 data teratas dari
+sumber data yang digunakan.
+
+\global\setlength{\Oldarrayrulewidth}{\arrayrulewidth}
+
+\global\setlength{\Oldtabcolsep}{\tabcolsep}
+
+\setlength{\tabcolsep}{2pt}
+
+\renewcommand*{\arraystretch}{1.5}
+
+
+
+\providecommand{\ascline}[3]{\noalign{\global\arrayrulewidth #1}\arrayrulecolor[HTML]{#2}\cline{#3}}
+
+\begin{longtable}[c]{ccccccc}
+\caption{Lima Data Pertama Dataset Kependudukan Indonesia 2023}\tabularnewline
+
+
+
+
+\ascline{1.5pt}{666666}{1-7}
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{No}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Provinsi}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Satuan}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Laki-laki}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Perempuan}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Total}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Rasio}}}}\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{\linebreak }}}}\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{JK}}}}} \\
+
+\ascline{1.5pt}{666666}{1-7}\endfirsthead 
+
+\ascline{1.5pt}{666666}{1-7}
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{No}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Provinsi}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Satuan}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Laki-laki}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Perempuan}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Total}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Rasio}}}}\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{\linebreak }}}}\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{JK}}}}} \\
+
+\ascline{1.5pt}{666666}{1-7}\endhead
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} ACEH}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,753,176}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,729,351}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 5,482,527}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 101}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} SUMATERA\ UTARA}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 7,721,314}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 7,665,326}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 15,386,640}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 101}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 3}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} SUMATERA\ BARAT}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,900,268}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,856,937}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 5,757,205}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 102}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 4}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} RIAU}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 3,396,387}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 3,246,487}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 6,642,874}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 105}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 5}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} JAMBI}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,872,177}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,806,992}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 3,679,169}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 104}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 6}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} SUMATERA\ SELATAN}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 4,453,902}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 4,289,620}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 8,743,522}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 4.0pt\relax \advance\rightskip by 4.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 104}}}} \\
+
+\ascline{1.5pt}{666666}{1-7}
+
+
+
+\end{longtable}
+
+
+
+\arrayrulecolor[HTML]{000000}
+
+\global\setlength{\arrayrulewidth}{\Oldarrayrulewidth}
+
+\global\setlength{\tabcolsep}{\Oldtabcolsep}
+
+\renewcommand*{\arraystretch}{1}
+
+\subsection{2. Merapihkan nama kolom dan mengurutkan berdasarkan total
+penduduk}\label{merapihkan-nama-kolom-dan-mengurutkan-berdasarkan-total-penduduk}
+
+Kemudian kita rapihkan nama kolom dan menampilkannya kembali secara utuh
+dengan mengurutkannya berdasarkan total penduduk.
+
+\global\setlength{\Oldarrayrulewidth}{\arrayrulewidth}
+
+\global\setlength{\Oldtabcolsep}{\tabcolsep}
+
+\setlength{\tabcolsep}{2pt}
+
+\renewcommand*{\arraystretch}{1.5}
+
+
+
+\providecommand{\ascline}[3]{\noalign{\global\arrayrulewidth #1}\arrayrulecolor[HTML]{#2}\cline{#3}}
+
+\begin{longtable}[c]{cccccc}
+\caption{Data Bersih Kependudukan Indonesia 2023}\tabularnewline
+
+
+
+
+\ascline{1.5pt}{666666}{1-6}
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Provinsi}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Satuan}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Laki-laki}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Perempuan}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Total}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Rasio}}}}\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{\linebreak }}}}\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{JK}}}}} \\
+
+\ascline{1.5pt}{666666}{1-6}\endfirsthead 
+
+\ascline{1.5pt}{666666}{1-6}
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Provinsi}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Satuan}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Laki-laki}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Perempuan}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Total}}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 5.0pt\relax \advance\rightskip by 5.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{Rasio}}}}\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{\linebreak }}}}\textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} \textbf{JK}}}}} \\
+
+\ascline{1.5pt}{666666}{1-6}\endhead
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} JAWA\ BARAT}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 25,264,916}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 24,595,414}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 49,860,330}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 103}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} JAWA\ TIMUR}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 20,711,675}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 20,816,259}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 41,527,934}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 100}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} JAWA\ TENGAH}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 18,866,423}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 18,674,539}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 37,540,962}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 102}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} SUMATERA\ UTARA}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 7,721,314}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 7,665,326}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 15,386,640}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 101}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} BANTEN}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 6,262,727}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 6,045,005}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 12,307,732}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 104}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} DKI\ JAKARTA}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 5,371,646}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 5,300,454}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 10,672,100}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 102}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} SULAWESI\ SELATAN}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 4,651,181}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 4,711,109}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 9,362,290}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 99}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} LAMPUNG}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 4,760,262}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 4,553,724}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 9,313,986}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 105}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} SUMATERA\ SELATAN}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 4,453,902}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 4,289,620}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 8,743,522}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 104}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} RIAU}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 3,396,387}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 3,246,487}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 6,642,874}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 105}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} SUMATERA\ BARAT}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,900,268}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,856,937}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 5,757,205}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 102}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} KALIMANTAN\ BARAT}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,887,209}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,736,119}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 5,623,328}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 106}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} NUSA\ TENGGARA\ TIMUR}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,784,901}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,784,167}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 5,569,068}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 101}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} NUSA\ TENGGARA\ BARAT}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,786,443}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,773,844}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 5,560,287}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 101}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} ACEH}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,753,176}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,729,351}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 5,482,527}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 101}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} PAPUA}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,376,744}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,105,948}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 4,482,692}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 113}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} BALI}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,209,736}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,194,526}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 4,404,262}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 101}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} KALIMANTAN\ SELATAN}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,135,703}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,086,630}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 4,222,333}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 103}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} KALIMANTAN\ TIMUR}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,027,088}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,882,653}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 3,909,741}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 108}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} DI\ YOGYAKARTA}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,849,541}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,886,948}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 3,736,489}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 99}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} JAMBI}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,872,177}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,806,992}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 3,679,169}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 104}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} SULAWESI\ TENGAH}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,583,646}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,503,104}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 3,086,750}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 106}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} KALIMANTAN\ TENGAH}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,434,119}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,339,628}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,773,747}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 108}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} SULAWESI\ TENGGARA}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,392,544}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,356,470}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,749,014}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 103}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} SULAWESI\ UTARA}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,369,846}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,311,689}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,681,535}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 105}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} KEPULAUAN\ RIAU}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,095,086}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,057,539}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,152,625}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 104}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} BENGKULU}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,065,992}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,020,014}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 2,086,006}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 105}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} MALUKU}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 971,580}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 948,882}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,920,462}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 103}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} KEPULAUAN\ BANGKA\ BELITUNG}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 776,607}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 735,292}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,511,899}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 106}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} SULAWESI\ BARAT}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 750,773}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 730,304}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,481,077}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 103}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} MALUKU\ UTARA}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 685,146}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 652,002}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,337,148}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 106}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} GORONTALO}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 611,784}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 601,398}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,213,182}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 102}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} PAPUA\ BARAT}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 622,228}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 565,039}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 1,187,267}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 111}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} KALIMANTAN\ UTARA}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 384,010}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 346,000}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 730,010}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} 111}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} PAPUA\ PEGUNUNGAN}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} }}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} }}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} }}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} }}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} PAPUA\ SELATAN}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} }}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} }}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} }}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} }}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} PAPUA\ TENGAH}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} }}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} }}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} }}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} }}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} PAPUA\ BARAT\ DAYA}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} Orang}}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} }}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} }}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} }}}} & \multicolumn{1}{>{}c}{\advance\leftskip by 3.0pt\relax \advance\rightskip by 3.0pt\relax \textcolor[HTML]{000000}{\fontsize{9}{9}\selectfont{{\fontspec{Arial} }}}} \\
+
+\ascline{1.5pt}{666666}{1-6}
+
+
+
+\end{longtable}
+
+
+
+\arrayrulecolor[HTML]{000000}
+
+\global\setlength{\arrayrulewidth}{\Oldarrayrulewidth}
+
+\global\setlength{\tabcolsep}{\Oldtabcolsep}
+
+\renewcommand*{\arraystretch}{1}
+
+\subsection{3. Menampilkan Grafik Rasio Jenis Kelamin per
+Provinsi}\label{menampilkan-grafik-rasio-jenis-kelamin-per-provinsi}
+
+Selanjutnya kita tampilkan grafik rasio jenis kelamin dari setiap
+provinsi.
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{coba_laporan_files/figure-pdf/unnamed-chunk-4-1.pdf}}
+
+}
+
+\caption{Distribusi Rasio Jenis Kelamin per Provinsi Tahun 2023}
+
+\end{figure}%
+
+\subsection{4. Menampilkan 10 Provinsi dengan Penduduk
+Terbanyak}\label{menampilkan-10-provinsi-dengan-penduduk-terbanyak}
+
+Lalu kita tampilkan barchart untuk membandingkan jumlah penduduk dari 10
+provinsi dengan jumlah penduduk terbanyak di Indonesia.
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{coba_laporan_files/figure-pdf/unnamed-chunk-5-1.pdf}}
+
+}
+
+\caption{Sepuluh Provinsi dengan Jumlah Penduduk Tertinggi}
+
+\end{figure}%
+
+
+
+
+\end{document}

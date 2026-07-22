@@ -1,0 +1,311 @@
+---
+# ============================================================
+# BAGIAN YAML HEADER (metadata + pengaturan dokumen)
+# Bagian ini diapit oleh --- di atas dan di bawah.
+# Quarto membaca bagian ini untuk tahu: judul apa, siapa penulis,
+# format output apa (PDF/Word/HTML), dan pengaturan tampilan lainnya.
+# ============================================================
+
+title: "Uji Coba Automasi Laporan Quarto dengan RStudio"   # Judul laporan
+author: "Bimasuci Basiludin"                                 # Nama penulis
+date: today                                                  # Tanggal otomatis diisi = tanggal saat laporan di-render
+lang: id                                                      # Bahasa dokumen = Indonesia (memengaruhi istilah bawaan seperti "Daftar Isi")
+
+format:
+  pdf:                          # Kita memilih output akhir berupa file PDF
+    documentclass: article       # Menggunakan kelas dokumen LaTeX "article" (gaya dokumen standar)
+    toc: true                    # toc = table of contents -> otomatis membuat Daftar Isi dari heading (##)
+
+    # --------------------------------------------------------
+    # include-in-header: menyisipkan kode LaTeX tambahan ke
+    # bagian "kepala" dokumen (sebelum konten dimulai).
+    # Di sini dipakai untuk MEMATIKAN judul otomatis bawaan
+    # LaTeX, karena kita akan membuat cover sendiri secara manual.
+    # --------------------------------------------------------
+    include-in-header:
+      text: |
+        \let\maketitle\relax
+        % ^ Perintah LaTeX ini "menonaktifkan" perintah \maketitle bawaan,
+        % supaya judul default (yang polos, tanpa desain) tidak ikut tercetak.
+
+    # --------------------------------------------------------
+    # include-before-body: menyisipkan kode LaTeX yang akan
+    # dicetak SEBELUM isi laporan dimulai -> ini tempat kita
+    # membuat halaman COVER kustom berwarna biru secara manual.
+    # --------------------------------------------------------
+    include-before-body:
+      text: |
+        \begin{titlepage}
+        % ^ Mulai membuat halaman khusus (cover), terpisah dari halaman isi
+
+          \definecolor{coverblue}{HTML}{004488}
+          \definecolor{goldline}{HTML}{FFD700}
+          % ^ Mendefinisikan 2 warna kustom yang dipakai di cover:
+          %   coverblue = biru tua (kode HTML 004488)
+          %   goldline  = kuning emas (kode HTML FFD700)
+
+          \pagecolor{coverblue} % Mewarnai latar belakang cover menjadi biru
+          \thispagestyle{empty} % Menghilangkan nomor halaman pada cover
+
+          \centering
+          \vspace*{0cm}
+          % ^ \centering = semua elemen di bawah ini diatur rata tengah
+          %   \vspace*{0cm} = jarak kosong vertikal di paling atas (di sini 0, artinya tidak ada jarak tambahan)
+
+          % Memasukkan Logo (Pastikan file logo-nobg.png ada di folder yang sama)
+          \includegraphics[width=4.5cm]{logo-nobg.png}\par\vspace{3cm}
+          % ^ Menampilkan gambar logo selebar 4.5 cm, lalu beri jarak 3cm ke elemen berikutnya.
+          %   PENTING: file "logo-nobg.png" HARUS berada di folder yang sama dengan file .qmd ini,
+          %   kalau tidak ada, proses render PDF akan gagal / error.
+
+          % Judul Laporan
+          {\huge\bfseries\color{white} Uji Coba Automasi Laporan Quarto dengan RStudio \par}
+          % ^ Menampilkan judul laporan dengan ukuran huruf besar (\huge), tebal (\bfseries),
+          %   dan warna putih (\color{white}) agar kontras dengan latar biru.
+          \vspace{0.5cm}
+
+          % Garis Dekorasi Emas
+          {\color{goldline}\hrule height 2pt}\par
+          % ^ Membuat garis horizontal tipis (tinggi 2pt) berwarna emas sebagai pemanis
+          \vspace{1.5cm}
+
+          % Nama Penulis
+          {\Large\bfseries\color{white} Bimasuci Basiludin \par}
+          % ^ Menampilkan nama penulis dengan ukuran lebih kecil dari judul, tetap tebal & putih
+
+          \vfill
+          % ^ Mendorong elemen berikutnya (tanggal) turun ke bagian PALING BAWAH halaman cover
+
+          % Tanggal di bagian bawah
+          {\large\color{white} \today \par}
+          % ^ \today = tanggal hari ini otomatis diisi oleh LaTeX saat PDF dibuat
+
+        \end{titlepage}
+        % ^ Menutup/mengakhiri halaman cover
+
+        \nopagecolor % Mengembalikan warna halaman berikutnya menjadi putih standar
+        % ^ Tanpa baris ini, SEMUA halaman setelah cover akan ikut berwarna biru!
+
+execute:
+  echo: false      # echo = false -> kode R (source code) TIDAK ditampilkan di PDF, hanya hasilnya (tabel/grafik) yang muncul
+  warning: false   # warning = false -> pesan peringatan (warning) dari R disembunyikan agar laporan terlihat rapi
+---
+
+<!--
+============================================================
+Mulai dari sini adalah BADAN LAPORAN (body), ditulis dengan
+campuran teks biasa (Markdown) dan blok kode R (chunk).
+Setiap blok kode diawali ```{r} dan diakhiri ```
+============================================================
+-->
+
+\clearpage
+<!-- Perintah LaTeX untuk pindah ke halaman baru sebelum konten Bab 1 dimulai
+     (memisahkan cover dan daftar isi dari isi laporan) -->
+
+## 1. Menampilkan 5 data teratas
+<!-- Tanda ## artinya ini adalah Judul Bab level 1 (Heading 2 di Markdown).
+     Heading inilah yang otomatis masuk ke Daftar Isi (toc) -->
+
+Pertama, kita akan mencoba untuk menampilkan sampel 5 data teratas dari sumber data yang digunakan.
+<!-- Ini teks biasa (narasi laporan), akan tercetak apa adanya di PDF -->
+
+```{r}
+#| include: false
+# ^ "include: false" artinya blok kode ini DIJALANKAN oleh R,
+#   tapi kode maupun hasilnya TIDAK ditampilkan sama sekali di PDF.
+#   Blok ini biasanya dipakai untuk "persiapan" (load library, baca data) yang
+#   tidak perlu dilihat pembaca laporan.
+
+library(readxl)     # Paket untuk membaca file Excel (.xlsx)
+library(tidyverse)  # Kumpulan paket untuk olah data & visualisasi (dplyr, ggplot2, dll)
+library(flextable)  # Paket untuk membuat tabel yang rapi/profesional di dokumen
+
+# 1. KUNCI UTAMA: Wajib dipasang agar flextable tidak memakai longtable yang merusak mode 2 kolom
+set_flextable_defaults(latex_container = "tabular")
+# ^ Mengatur setting bawaan flextable supaya tabel dicetak dengan format LaTeX
+#   "tabular" (bukan "longtable"), agar tidak merusak tata letak halaman
+
+#Membaca data (sesuaikan nama file yang tersimpan di lokal)
+
+nama_file <- "Jumlah penduduk Menurut Jenis Kelamin dan Rasio Jenis Kelamin-2023-Provinsi.xlsx"
+# ^ Menyimpan nama file Excel ke sebuah variabel bernama "nama_file"
+#   CATATAN: file ini juga harus berada di folder yang sama dengan file .qmd
+
+data_penduduk <- read_excel(nama_file)
+# ^ Membaca isi file Excel tadi, lalu menyimpannya sebagai tabel data
+#   bernama "data_penduduk" yang siap diolah di R
+```
+
+```{r}
+#| tbl-cap: "Lima Data Pertama Dataset Kependudukan Indonesia 2023"
+# ^ tbl-cap = judul/caption yang akan tampil di bawah tabel pada laporan PDF
+
+# Menampilkan 5 data teratas dengan tampilan profesional
+
+head(data_penduduk) %>%
+  # ^ head() mengambil beberapa baris PERTAMA dari data (default 6 baris teratas)
+  rename(
+    # ^ rename() mengubah nama-nama kolom aslinya menjadi nama yang lebih rapi untuk ditampilkan
+    `No` = No,
+    `Provinsi` = Cakupan,
+    `Satuan` = Satuan,
+    `Laki-laki` = `LAKI LAKI`,
+    `Perempuan` = PEREMPUAN,
+    `Total` = TOTAL,
+    `Rasio\nJK` = `RASIO JENIS KELAMIN`   # \n di sini artinya baris baru di dalam judul kolom
+  ) %>%
+  flextable() %>%
+  # ^ Mengubah tabel data biasa menjadi objek "flextable" (tabel siap-cetak yang bisa didandani)
+  # HAPUS fungsi set_caption() di sini
+  bold(part = "header") %>%                    # Menebalkan tulisan pada baris judul kolom (header)
+  align(j = 1:7, align = "center", part = "all") %>%  # Meratakan isi kolom 1-7 ke tengah, untuk seluruh tabel
+  fontsize(size = 9, part = "all") %>%          # Mengatur ukuran huruf menjadi 9pt di seluruh tabel
+  padding(padding = 5, part = "header") %>%     # Memberi jarak/padding 5 di sekitar teks header
+  padding(padding = 4, part = "body") %>%       # Memberi jarak/padding 4 di sekitar teks isi tabel
+  autofit() %>%                                 # Menyesuaikan otomatis lebar kolom dengan isinya
+  set_table_properties(layout = "autofit", width = 1)
+  # ^ Mengatur agar tabel melebar mengisi penuh lebar halaman (width = 1 = 100%)
+```
+
+## 2. Merapihkan nama kolom dan mengurutkan berdasarkan total penduduk
+
+Kemudian kita rapihkan nama kolom dan menampilkannya kembali secara utuh dengan mengurutkannya berdasarkan total penduduk.
+
+```{r}
+#| tbl-cap: "Data Bersih Kependudukan Indonesia 2023"
+
+# Merapikan nama kolom dan mengurutkan berdasarkan total penduduk
+data_bersih <- data_penduduk %>%
+  rename(
+    # Mengganti nama kolom asli (huruf besar/tidak rapi) menjadi nama yang konsisten (huruf kecil, snake_case)
+    no = No,
+    provinsi = Cakupan,
+    satuan = Satuan,
+    laki_laki = `LAKI LAKI`,
+    perempuan = PEREMPUAN,
+    total = TOTAL,
+    rasio_jk = `RASIO JENIS KELAMIN`
+  ) %>%
+  # Menghapus baris jika ada total nasional/Indonesia
+  filter(!str_detect(provinsi, "(INDONESIA|TOTAL|Total|Indonesia)")) %>%
+  # ^ filter() menyaring baris data. Baris yang nama provinsinya mengandung kata
+  #   "INDONESIA"/"TOTAL"/dsb DIBUANG (tanda ! artinya "bukan/tidak"),
+  #   karena baris itu biasanya berisi angka rekap nasional, bukan data per-provinsi.
+
+  # Mengurutkan berdasarkan total penduduk terbanyak
+  arrange(desc(total))
+  # ^ arrange() mengurutkan baris data. desc(total) = urut dari TOTAL PENDUDUK terbesar ke terkecil
+
+# Menampilkan data bersih dengan tampilan profesional
+
+data_bersih %>%
+  select(-no) %>%
+  # ^ select(-no) = mengambil semua kolom KECUALI kolom "no" (tanda minus = buang kolom ini dari tampilan)
+  rename(
+    `Provinsi` = provinsi,
+    `Satuan` = satuan,
+    `Laki-laki` = laki_laki,
+    `Perempuan` = perempuan,
+    `Total` = total,
+    `Rasio\nJK` = rasio_jk
+  ) %>%
+  flextable() %>%
+  # HAPUS fungsi set_caption() di sini
+  bold(part = "header") %>%
+  align(j = 1:6, align = "center", part = "all") %>%
+  fontsize(size = 9, part = "all") %>%
+  padding(padding = 5, part = "header") %>%
+  padding(padding = 3, part = "body") %>%
+  autofit() %>%
+  set_table_properties(layout = "autofit", width = 1)
+# ^ Pengaturan tampilan tabel ini sama seperti tabel pertama, hanya beda jumlah kolom (6, karena kolom "no" dihapus)
+```
+
+## 3. Menampilkan Grafik Rasio Jenis Kelamin per Provinsi
+
+Selanjutnya kita tampilkan grafik rasio jenis kelamin dari setiap provinsi.
+
+```{r}
+#| fig-width: 6.5      # Lebar grafik dalam satuan inci
+#| fig-height: 6        # Tinggi grafik dalam satuan inci
+#| fig-align: center    # Grafik diposisikan rata tengah halaman
+#| fig-cap: "Distribusi Rasio Jenis Kelamin per Provinsi Tahun 2023"
+# ^ fig-cap = judul/caption yang tampil di bawah grafik
+
+ggplot(data_bersih, aes(x = reorder(provinsi, rasio_jk), y = rasio_jk)) +
+  # ^ Membuat grafik dari data_bersih. Sumbu X = nama provinsi (diurutkan berdasarkan rasio_jk),
+  #   sumbu Y = nilai rasio jenis kelamin
+
+  geom_segment(aes(x = provinsi, xend = provinsi, y = 100, yend = rasio_jk), color = "grey70", size = 0.6) +
+  # ^ Menggambar garis (batang tipis) dari titik 100 sampai nilai rasio setiap provinsi -> ini bagian "tongkat" dari lollipop chart
+
+  geom_point(color = "#e056fd", size = 2) +
+  # ^ Menggambar titik/bulatan ungu di ujung setiap garis -> ini bagian "kepala" lollipop-nya
+
+  geom_hline(yintercept = 100, linetype = "dashed", color = "red", size = 0.5) +
+  # ^ Menggambar garis putus-putus horizontal merah di posisi 100, sebagai penanda "titik seimbang"
+  #   (jumlah laki-laki = jumlah perempuan)
+
+  coord_flip() +
+  # ^ Membalik posisi sumbu X dan Y, sehingga nama provinsi tampil mendatar (lebih mudah dibaca karena nama provinsi panjang)
+
+  labs(
+    # ^ labs() mengatur teks judul, subjudul, dan label sumbu grafik
+    title = "Rasio Jenis Kelamin per Provinsi",
+    subtitle = "Garis merah putus-putus menunjukkan titik seimbang (100)",
+    x = "Provinsi",
+    y = "Rasio (Laki-laki per 100 Perempuan)"
+  ) +
+  theme_minimal(base_size = 9) +
+  # ^ Menggunakan tema tampilan minimalis (bersih, tanpa latar abu-abu) dengan ukuran huruf dasar 9
+
+  theme(
+    # ^ Pengaturan tambahan/detail tampilan grafik
+    plot.title = element_text(face = "bold", color = "#111111"),   # Judul dicetak tebal, warna hitam pekat
+    plot.subtitle = element_text(color = "grey40", size = 8),      # Subjudul warna abu-abu, ukuran lebih kecil
+    # MENAMBAHKAN BORDER PADA GRAFIK
+    panel.border = element_rect(color = "grey80", fill = NA, size = 0.5),  # Menambahkan garis tepi/bingkai di sekeliling area grafik
+    panel.grid.major.y = element_blank(), # Menghapus grid horizontal agar lollipop chart bersih
+    plot.margin = margin(10, 15, 10, 10)  # Mengatur jarak margin grafik (atas, kanan, bawah, kiri) dalam satuan pt
+  )
+```
+
+## 4. Menampilkan 10 Provinsi dengan Penduduk Terbanyak
+
+Lalu kita tampilkan barchart untuk membandingkan jumlah penduduk dari 10 provinsi dengan jumlah penduduk terbanyak di Indonesia.
+
+```{r}
+#| fig-width: 6.5
+#| fig-height: 4
+#| fig-align: center
+#| fig-cap: "Sepuluh Provinsi dengan Jumlah Penduduk Tertinggi"
+
+# Mengambil 10 provinsi teratas
+top_10_provinsi <- data_bersih %>% slice_max(total, n = 10)
+# ^ slice_max(total, n = 10) mengambil 10 baris dengan nilai "total" (jumlah penduduk) TERBESAR
+
+ggplot(top_10_provinsi, aes(x = reorder(provinsi, total), y = total / 1000000)) +
+  # ^ Sumbu X = nama provinsi (diurutkan berdasarkan total penduduk),
+  #   sumbu Y = total penduduk dibagi 1.000.000 supaya satuannya jadi "juta jiwa" (lebih mudah dibaca)
+
+  geom_col(fill = "#004488", width = 0.7) + # Menggunakan warna senada dengan tema cover PDF Anda
+  # ^ geom_col() menggambar diagram batang. fill = warna biru (sama dengan warna cover), width = lebar batang
+
+  coord_flip() +
+  # ^ Membalik sumbu agar nama provinsi tampil mendatar (lebih mudah dibaca)
+
+  labs(
+    title = "10 Provinsi dengan Jumlah Penduduk Tertinggi di Indonesia",
+    x = "Provinsi",
+    y = "Jumlah Penduduk (Juta Jiwa)"
+  ) +
+  theme_minimal(base_size = 9) +
+  theme(
+    plot.title = element_text(face = "bold", color = "#111111"),
+    # MENAMBAHKAN BORDER PADA GRAFIK
+    panel.border = element_rect(color = "grey80", fill = NA, size = 0.5),
+    panel.grid.major.y = element_blank(), # Menghapus grid vertikal yang tidak perlu
+    plot.margin = margin(10, 15, 10, 10)
+  )
+```
