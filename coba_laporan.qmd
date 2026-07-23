@@ -7,7 +7,7 @@ format:
   pdf:
     documentclass: article
     toc: true
-    keep-tex: true   # Menambahkan output file latex
+    keep-tex: true
     # Mengosongkan perintah pembentukan judul bawaan LaTeX agar halaman cover polos tidak terbuat
     include-in-header:
       text: |
@@ -71,10 +71,11 @@ data_penduduk <- read_excel(nama_file)
 ```
 
 ```{r}
-#| tbl-cap: "Lima Data Pertama Dataset Kependudukan Indonesia 2023"
+#| fig-cap: "Lima Data Pertama Dataset Kependudukan Indonesia 2023"
 # Menampilkan 5 data teratas dengan tampilan profesional
 
-head(data_penduduk) %>% 
+#Membuat tabel 5 data teratas
+tabel_1 <- head(data_penduduk) %>% 
   rename(
     `No` = No,
     `Provinsi` = Cakupan,
@@ -93,6 +94,9 @@ head(data_penduduk) %>%
   padding(padding = 4, part = "body") %>%      
   autofit() %>% 
   set_table_properties(layout = "autofit", width = 1)
+
+invisible(save_as_image(tabel_1, path = "tabel_5_teratas.png"))
+knitr::include_graphics("tabel_5_teratas.png")
 ```
 
 ## 2. Merapihkan nama kolom dan mengurutkan berdasarkan total penduduk
@@ -100,7 +104,7 @@ head(data_penduduk) %>%
 Kemudian kita rapihkan nama kolom dan menampilkannya kembali secara utuh dengan mengurutkannya berdasarkan total penduduk.
 
 ```{r}
-#| tbl-cap: "Data Bersih Kependudukan Indonesia 2023"
+#| fig-cap: "Data Bersih Kependudukan Indonesia 2023"
 # Merapikan nama kolom dan mengurutkan berdasarkan total penduduk
 data_bersih <- data_penduduk %>%
   rename(
@@ -119,7 +123,7 @@ data_bersih <- data_penduduk %>%
 
 # Menampilkan data bersih dengan tampilan profesional
 
-data_bersih %>%
+tabel_2 <- data_bersih %>%
   select(-no) %>%              
   rename(
     `Provinsi` = provinsi,
@@ -138,6 +142,9 @@ data_bersih %>%
   padding(padding = 3, part = "body") %>% 
   autofit() %>% 
   set_table_properties(layout = "autofit", width = 1)
+
+invisible(save_as_image(tabel_2, path = "tabel_urutan_total.png"))
+knitr::include_graphics("tabel_urutan_total.png")
 ```
 
 ## 3. Menampilkan Grafik Rasio Jenis Kelamin per Provinsi
