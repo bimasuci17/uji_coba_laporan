@@ -6,12 +6,14 @@ lang: id
 format:
   pdf:
     documentclass: article
-    toc: true
+    classoption: twocolumn # Menjadikan laporan 2 kolom
     keep-tex: true
-    # Mengosongkan perintah pembentukan judul bawaan LaTeX agar halaman cover polos tidak terbuat
     include-in-header:
       text: |
-        \let\maketitle\relax 
+        \let\maketitle\relax
+        \usepackage{multicol} % Menambahkan pustaka manipulasi kolom LaTeX
+        \usepackage{cuted}    % PUSTAKA UTAMA: Menyelipkan elemen 1-kolom di tengah mode 2-kolom
+        \usepackage{caption}  % Memungkinkan pemberian caption di luar environment figure
     # Memasukkan kode cover kustom berwarna biru
     include-before-body:
       text: |
@@ -50,12 +52,20 @@ execute:
 
 \clearpage
 
+\onecolumn
+
+\tableofcontents
+
+\clearpage
+
+\twocolumn
+
 ## 1. Menampilkan 5 data teratas
 
-Pertama, kita akan mencoba untuk menampilkan sampel 5 data teratas dari sumber data yang digunakan.
+Pertama, kita akan mencoba untuk menampilkan sampel 5 data teratas dari data Jumlah penduduk menurut Jenis Kelamin dan Rasio Jenis Kelamin per Provinsi Tahun 2023.
 
 ```{r}
-#| include: false
+#| fig-cap: "5 data teratas"
 
 library(readxl)
 library(tidyverse)
@@ -68,10 +78,7 @@ set_flextable_defaults(latex_container = "tabular")
 
 nama_file <- "Jumlah penduduk Menurut Jenis Kelamin dan Rasio Jenis Kelamin-2023-Provinsi.xlsx"
 data_penduduk <- read_excel(nama_file)
-```
 
-```{r}
-#| fig-cap: "Lima Data Pertama Dataset Kependudukan Indonesia 2023"
 # Menampilkan 5 data teratas dengan tampilan profesional
 
 #Membuat tabel 5 data teratas
@@ -83,7 +90,7 @@ tabel_1 <- head(data_penduduk) %>%
     `Laki-laki` = `LAKI LAKI`,
     `Perempuan` = PEREMPUAN,
     `Total` = TOTAL,
-    `Rasio\nJK` = `RASIO JENIS KELAMIN`
+    `Rasio JK` = `RASIO JENIS KELAMIN`
   ) %>% 
   flextable() %>% 
   # HAPUS fungsi set_caption() di sini
